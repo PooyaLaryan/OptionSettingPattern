@@ -55,7 +55,14 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 
-builder.Services.Configure<PersonSetting>(builder.Configuration.GetSection(nameof(PersonSetting)));
+//builder.Services.Configure<PersonSetting>(builder.Configuration.GetSection(nameof(PersonSetting)));
+// or 
+// below line is clean code 
+builder.Services.AddOptions<PersonSetting>()
+    .BindConfiguration(nameof(PersonSetting))
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+
 builder.Services.AddScoped<IPersonServiceWithOptions, PersonServiceWithOptions>();
 builder.Services.AddScoped<IPersonServiceWithOptionsSnapshot, PersonServiceWithOptionsSnapshot>();
 builder.Services.AddScoped<IPersonServiceWithOptionsMonitor, PersonServiceWithOptionsMonitor>();
